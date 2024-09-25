@@ -9,7 +9,6 @@ options = {
 }
 
 OptionParser.new do |opts|
-
   opts.on("-yYEAR") do |y|
     options[:year] = y.to_i
   end
@@ -22,10 +21,10 @@ end.parse!
 def print_calendar(month, year)
   first_day = Date.new(year, month, 1)
   last_day = Date.new(year, month, -1)
-  days_in_month = (first_day..last_day).to_a
+  days_in_month = (first_day..last_day)
 
-  puts "#{year}年#{month}月"
-  puts "日 月 火 水 木 金 土"
+  puts "#{Date::MONTHNAMES[month]} #{year}".center(20)
+  puts "Su Mo Tu We Th Fr Sa"
 
   print "   " * first_day.wday
 
