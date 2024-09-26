@@ -23,7 +23,7 @@ def print_calendar(month, year)
   last_day = Date.new(year, month, -1)
   days_in_month = (first_day..last_day)
 
-  puts "#{Date::MONTHNAMES[month]} #{year}".center(20)
+  puts first_day.strftime("%B %Y").center(20)
   puts "Su Mo Tu We Th Fr Sa"
 
   print "   " * first_day.wday
