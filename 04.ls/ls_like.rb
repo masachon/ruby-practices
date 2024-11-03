@@ -2,23 +2,26 @@
 
 def list_files
   # 現在のディレクトリのファイルを取得し、ソート
-  Dir.entries(Dir.pwd).select { |entry| entry != '.' && entry != '..' }.sort
+  Dir.glob('*').sort
 end
+
+# 列数を定数として設定
+COLUMNS = 3
 
 def calculate_max_widths(formatted_output)
   # 各列の最大幅を計算
-  max_widths = Array.new(3, 0)
+  max_widths = Array.new(COLUMNS, 0)
   formatted_output.each do |row|
     row.each_with_index do |file, column_index|
-      max_widths[column_index] = [max_widths[column_index], file.to_s.length].max if file
+      max_widths[column_index] = [max_widths[column_index], file.to_s.length].max
     end
   end
   max_widths
 end
 
-def format_and_display(files, columns = 3)
-  sorted_files = files.sort_by { |file| file.to_i.to_s.length }
-  max_rows = (sorted_files.size.to_f / columns).ceil
+def format_and_display(files)
+  sorted_files = files.sort_by(&:to_i)
+  max_rows = (sorted_files.size.to_f / COLUMNS).ceil
   formatted_output = Array.new(max_rows) { [] }
 
   # 各ファイルを配置
@@ -33,8 +36,8 @@ def format_and_display(files, columns = 3)
   # 各行を出力
   formatted_output.each do |row|
     row_output = row.map.with_index do |file, column_index|
-      file.nil? ? ' ' * max_widths[column_index] : file.ljust(max_widths[column_index])
-    end.join(' ' * 2) # 2スペースで区切って表示
+      (file || '').ljust(max_widths[column_index])
+    end.join(' ' * 2)
     puts row_output
   end
 end
