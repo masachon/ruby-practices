@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-def list_files
+def list_files(show_all)
   # 現在のディレクトリのファイルを取得し、ソート
-  Dir.glob('*').sort
+  Dir.glob('*', show_all ? File::FNM_DOTMATCH : 0).sort
 end
 
 # 列数を定数として設定
@@ -43,5 +43,6 @@ def format_and_display(files)
 end
 
 # メインプログラム
-files = list_files
+show_all = ARGV.include?('-a') # -aオプションが含まれているかを確認
+files = list_files(show_all)
 format_and_display(files)
