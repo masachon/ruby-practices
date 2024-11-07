@@ -2,9 +2,7 @@
 
 def list_files(show_all)
   # 隠しファイルも含め、すべてのファイルを表示
-  files = Dir.glob('*', show_all ? File::FNM_DOTMATCH : 0)
-  files.unshift('..') if show_all # -aオプションのときに'..' を追加
-  files.sort
+  files = Dir.glob('*', show_all ? File::FNM_DOTMATCH : 0).sort
 end
 
 # 列数を定数として設定
